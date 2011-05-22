@@ -456,7 +456,13 @@ Options may also be set in the 'RI' environment variable.
     out << RDoc::Markup::Heading.new(1, "#{name}:")
     out << RDoc::Markup::BlankLine.new
 
-    out << RDoc::Markup::Paragraph.new(methods.join(', ')).tap { |p| p.indent = 2 }
+    if @use_stdout and !@interactive
+      out.push(*methods.map do |method|
+        RDoc::Markup::Verbatim.new method
+      end)
+    else
+      out << RDoc::Markup::Paragraph.new(methods.join(', ')).tap { |p| p.indent = 2 }
+    end
 
     out << RDoc::Markup::BlankLine.new
   end
