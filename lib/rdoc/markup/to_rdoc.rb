@@ -168,7 +168,13 @@ class RDoc::Markup::ToRdoc < RDoc::Markup::Formatter
   # Adds +paragraph+ to the output
 
   def accept_paragraph paragraph
-    wrap attributes(paragraph.text)
+    if paragraph.indent
+      @indent += paragraph.indent
+      wrap attributes(paragraph.text)
+      @indent -= paragraph.indent
+    else
+      wrap attributes(paragraph.text)
+    end
   end
 
   ##
