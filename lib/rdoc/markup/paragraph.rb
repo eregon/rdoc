@@ -15,5 +15,9 @@ class RDoc::Markup::Paragraph < RDoc::Markup::Raw
     visitor.accept_paragraph self
   end
 
+  def == other # :nodoc:
+    super and indent == other.indent
+  end
+
 end
 
